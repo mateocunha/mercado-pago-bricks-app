@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { initMercadoPago, Payment as PaymentBrick } from '@mercadopago/sdk-react';
 
 const Payment = () => {
-  const { preferenceId } = useParams();
+  const { preferenceId, publicKey } = useParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const initialization = {
@@ -12,24 +12,27 @@ const Payment = () => {
   };
   const navigate = useNavigate();
 
-  // Initialize Mercado Pago with your public key
-  // Replace 'YOUR_PUBLIC_KEY' with your actual Mercado Pago public key
+  // Initialize Mercado Pago with public key from URL params
   useEffect(() => {
     const init = async () => {
       try {
-        await initMercadoPago('APP_USR-40b76792-6418-4be9-8a9a-0144db8b9b30', {
+        if (!publicKey) {
+          throw new Error('Public key is required');
+        }
+        
+        await initMercadoPago(publicKey, {
           locale: 'es-AR',
         });
         setLoading(false);
       } catch (err) {
         console.error('Error initializing Mercado Pago:', err);
-        setError('Failed to initialize payment processor. Please try again later.');
+        setError('Failed to initialize payment processor. Please check the public key.');
         setLoading(false);
       }
     };
 
     init();
-  }, []);
+  }, [publicKey]);
 
   const handleError = async (error) => {
     console.error('Payment error:', error);

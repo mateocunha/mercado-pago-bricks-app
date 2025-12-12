@@ -119,6 +119,12 @@ body {
   text-align: center;
 }
 
+.info-text {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
 .payment-brick-container {
   margin: 2rem 0;
   min-height: 300px;

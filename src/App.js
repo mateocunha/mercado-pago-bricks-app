@@ -14,7 +14,7 @@ function App() {
         <main className="app-content">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/payment/:preferenceId" element={<Payment />} />
+            <Route path="/public_key/:publicKey/preference/:preferenceId" element={<Payment />} />
           </Routes>
         </main>
       </div>
